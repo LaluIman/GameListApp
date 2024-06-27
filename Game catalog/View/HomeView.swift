@@ -7,35 +7,71 @@
 
 import SwiftUI
 
-
 struct HomeView: View {
     @ObservedObject var viewModel = GamesViewModel()
-    
+    @State private var topGames: [Game] = []
+
     var body: some View {
         NavigationView {
             VStack {
-                TextField("Search game", text: $viewModel.searchQuery)
-                    .padding()
-                    .background(Color(.systemGray6))
-                    .cornerRadius(10)
-                    .padding(.horizontal)
-                
                 if viewModel.games.isEmpty {
                     ProgressView()
                         .padding()
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .frame(maxHeight: .infinity)
                 } else {
-                    List(viewModel.games) { game in
-                        NavigationLink(destination: DetailView(game: game)) {
-                            GameRow(game: game)
+                    List {
+                        // Carousel Section
+                        VStack(alignment: .leading){
+                            Text("Top 5 games")
+                                .font(.title3).bold()
+                                .foregroundStyle(.yellow)
+                                .padding()
+                            Section {
+                                ScrollView(.horizontal, showsIndicators: false) {
+                                    LazyHStack(spacing: 10) {
+                                        ForEach(topGames, id: \.id) { game in
+                                            GameCard(game: game)
+                                        }
+                                    }
+                                    .padding(.horizontal, 10)
+                                }
+                            }
+                        }
+                        
+                        // Games List Section
+                        VStack(alignment: .leading){
+                            Text("Games by rank")
+                                .font(.title3).bold()
+                                .foregroundStyle(.yellow)
+                                .padding()
+                            Section {
+                                ForEach(viewModel.games.indices, id: \.self) { index in
+                                    let game = viewModel.games[index]
+                                    HStack {
+                                        Text("\(index + 1)")
+                                            .foregroundStyle(.yellow)
+                                            .padding(5)
+                                        NavigationLink(destination: DetailView(game: game)) {
+                                            GameRow(game: game)
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                     .listStyle(PlainListStyle())
+                    .onAppear {
+                        if viewModel.games.count >= 5 {
+                            topGames = Array(viewModel.games.prefix(5))
+                        } else {
+                            topGames = viewModel.games
+                        }
+                    }
                 }
             }
             .progressViewStyle(.circular)
             .background(Color(.systemBackground))
-            .navigationTitle("Games by rank")
+            .navigationTitle("Games Catalog")
         }
         .environment(\.colorScheme, .dark)
     }

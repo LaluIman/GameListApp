@@ -41,7 +41,6 @@ struct GamesManager {
                 if let gameResponse = decodedData as? GameResponse {
                     var gamesWithDescription: [Game] = []
                     for var game in gameResponse.results {
-                        // Fetch additional details including description
                         if let gameDetailURL = URL(string: "https://api.rawg.io/api/games/\(game.id)?key=7ecfcb8fa13a47e190e790f26c8e7e87") {
                             let detailData = try Data(contentsOf: gameDetailURL)
                             let detailResponse = try decoder.decode(Game.self, from: detailData)

@@ -21,11 +21,21 @@ struct TabssView: View {
                     Color.black,
                     for: .tabBar)
             
+            SearchView()
+                .tabItem {
+                    Label("Search", systemImage: "magnifyingglass")
+                }
+                .tag(1)
+                .toolbarBackground(
+                        Color.black,
+                        for: .tabBar)
+            
+            
             AboutView()
                 .tabItem {
                     Label("Author", systemImage: "person.circle")
                 }
-                .tag(1)
+                .tag(2)
             
         }
         .onAppear {

@@ -25,7 +25,9 @@ struct GameRow: View {
                                 .clipShape(RoundedRectangle(cornerRadius: 20))
                                 .clipped()
                         case .failure:
-                            Color.red.frame(width: 110, height: 125)
+                            Image(systemName: "photo")
+                            .frame(width: 110, height: 125)
+                            .background(Color(.secondarySystemBackground))
                             .clipShape(RoundedRectangle(cornerRadius: 20))
                         @unknown default:
                             ProgressView()
@@ -44,9 +46,10 @@ struct GameRow: View {
                     .font(.subheadline)
                     .foregroundColor(.secondary)
                 HStack {
-                    Text("Rating: \(game.rating, specifier: "%.1f")")
+                    Text("\(game.rating, specifier: "%.1f")")
                         .font(.subheadline)
-                        .foregroundStyle(.secondary)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(.yellow)
                     Image(systemName: "star.fill")
                         .foregroundStyle(.yellow)
                 }
