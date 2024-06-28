@@ -22,6 +22,7 @@ struct AboutView: View {
                     .padding(.bottom, 20)
                 
                 Text("Lalu Iman Abdullah")
+                    .foregroundStyle(.yellow)
                     .font(.largeTitle).bold()
                     .padding()
                     .foregroundColor(.primary)

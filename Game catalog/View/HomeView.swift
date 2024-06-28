@@ -19,7 +19,7 @@ struct HomeView: View {
                         .padding()
                         .frame(maxHeight: .infinity)
                 } else {
-                    List {
+                    ScrollView{
                         // Carousel Section
                         VStack(alignment: .leading){
                             Text("Top 5 games")
@@ -44,8 +44,7 @@ struct HomeView: View {
                                 .font(.title3).bold()
                                 .foregroundStyle(.yellow)
                                 .padding()
-                            Section {
-                                ForEach(viewModel.games.indices, id: \.self) { index in
+                            ForEach(viewModel.games.indices, id: \.self) { index in
                                     let game = viewModel.games[index]
                                     HStack {
                                         Text("\(index + 1)")
@@ -56,7 +55,6 @@ struct HomeView: View {
                                         }
                                     }
                                 }
-                            }
                         }
                     }
                     .listStyle(PlainListStyle())

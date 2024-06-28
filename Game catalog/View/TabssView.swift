@@ -21,16 +21,7 @@ struct TabssView: View {
                     Color.black,
                     for: .tabBar)
             
-            SearchView()
-                .tabItem {
-                    Label("Search", systemImage: "magnifyingglass")
-                }
-                .tag(1)
-                .toolbarBackground(
-                        Color.black,
-                        for: .tabBar)
-            
-            
+    
             AboutView()
                 .tabItem {
                     Label("Author", systemImage: "person.circle")
