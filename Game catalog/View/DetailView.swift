@@ -9,77 +9,97 @@ import SwiftUI
 
 struct DetailView: View {
     let game: Game
+    @Environment(\.managedObjectContext) private var viewContext
+    @StateObject private var dataController = DataController()
 
     var body: some View {
-        VStack {
-            ScrollView {
-                VStack {
-                    if let imageUrl = game.backgroundImage, let url = URL(string: imageUrl) {
-                        AsyncImage(url: url) { phase in
-                            if let image = phase.image {
-                                image.resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .clipShape(RoundedRectangle(cornerRadius: 20))
-                                    .frame(height: 300)
-                            } else if phase.error != nil {
-                                Color.red.frame(height: 300)
-                                    .clipShape(RoundedRectangle(cornerRadius: 20))
-                            } else {
-                                ProgressView()
-                                    .frame(height: 300)
-                            }
-                        }
-                    } else {
-                        Color.gray.frame(height: 300)
-                    }
-
-                    Text(game.name)
-                        .font(.largeTitle).bold()
-                        .foregroundStyle(.yellow)
-                        .foregroundColor(.primary)
-                        .multilineTextAlignment(.center)
-                        .padding()
-
-                    HStack {
-                        Text("Released:  \(game.released)")
-                            .font(.headline)
-                            .padding(.bottom)
-                            .foregroundColor(.secondary)
-
-                        Spacer()
-
-                        HStack {
-                            Text("Rating: \(game.rating, specifier: "%.1f")")
-                                .font(.headline)
-                                .foregroundStyle(.secondary)
-                            Image(systemName: "star.fill")
-                                .foregroundStyle(.yellow)
-                        }
-                        .padding(.bottom)
-                        
-                    }
-
+            VStack {
+                ScrollView {
                     VStack {
-                        Text("Game detail")
-                            .font(.title3)
-                            .fontWeight(.semibold)
+                        if let imageUrl = game.backgroundImage, let url = URL(string: imageUrl) {
+                            AsyncImage(url: url) { phase in
+                                if let image = phase.image {
+                                    image.resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .clipShape(RoundedRectangle(cornerRadius: 20))
+                                        .frame(height: 300)
+                                } else if phase.error != nil {
+                                    Color.red.frame(height: 300)
+                                        .clipShape(RoundedRectangle(cornerRadius: 20))
+                                } else {
+                                    ProgressView()
+                                        .frame(height: 300)
+                                }
+                            }
+                        } else {
+                            Color.gray.frame(height: 300)
+                        }
+                        
+                        Text(game.name)
+                            .font(.largeTitle).bold()
                             .foregroundStyle(.yellow)
-                        Text(game.description ?? "No description available.")
-                            .font(.body)
+                            .foregroundColor(.primary)
+                            .multilineTextAlignment(.center)
                             .padding()
-                            .foregroundColor(.secondary)
+                        
+                        HStack {
+                            Text("Released:  \(game.released)")
+                                .font(.headline)
+                                .padding(.bottom)
+                                .foregroundColor(.secondary)
+                            
+                            Spacer()
+                            
+                            HStack {
+                                Text("Rating: \(game.rating, specifier: "%.1f")")
+                                    .font(.headline)
+                                    .foregroundStyle(.secondary)
+                                Image(systemName: "star.fill")
+                                    .foregroundStyle(.yellow)
+                            }
+                            .padding(.bottom)
+                            
+                            Button(action: addToFavorites) {
+                               Image(systemName: "heart")
+                                    .font(.title)
+                                    .foregroundColor(.yellow)
+                                    .padding()
+                           }
+                        }
+                        
+                        VStack {
+                            Text("Game detail")
+                                .font(.title3)
+                                .fontWeight(.semibold)
+                                .foregroundStyle(.yellow)
+                            Text(game.description ?? "No description available.")
+                                .font(.body)
+                                .padding()
+                                .foregroundColor(.secondary)
+                        }
                     }
+                    
+                    Spacer()
                 }
-
-                Spacer()
+                .listStyle(.plain)
+                .padding()
+                .background(Color(.systemBackground))
+                .navigationTitle(game.name)
+                .environment(\.colorScheme, .dark)
             }
-            .listStyle(.plain)
-            .padding()
-            .background(Color(.systemBackground))
-            .navigationTitle(game.name)
-            .environment(\.colorScheme, .dark)
         }
-    }
+    
+    private func addToFavorites() {
+            dataController.addFavoriteGame(
+                id: UUID(),
+                name: game.name,
+                released: game.released,
+                rating: game.rating,
+                backgroundImage: game.backgroundImage,
+                description: game.description,
+                context: viewContext
+            )
+        }
 }
 
 struct DetailView_Previews: PreviewProvider {
