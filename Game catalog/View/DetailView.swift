@@ -11,6 +11,8 @@ struct DetailView: View {
     let game: Game
     @Environment(\.managedObjectContext) private var viewContext
     @StateObject private var dataController = DataController()
+    @State private var isFavorite = false
+    @Environment(\.presentationMode) private var presentationMode
 
     var body: some View {
             VStack {
@@ -58,13 +60,15 @@ struct DetailView: View {
                                     .foregroundStyle(.yellow)
                             }
                             .padding(.bottom)
-                            
-                            Button(action: addToFavorites) {
-                               Image(systemName: "heart")
-                                    .font(.title)
-                                    .foregroundColor(.yellow)
-                                    .padding()
-                           }
+                            Button {
+                              addToFavorites()
+                            } label: {
+                              Image(systemName: isFavorite ? "heart.fill" : "heart")
+                                .font(.title)
+                                .foregroundColor(.yellow)
+                                .padding()
+                            }
+                            .disabled(isFavorite)
                         }
                         
                         VStack {
@@ -90,16 +94,20 @@ struct DetailView: View {
         }
     
     private func addToFavorites() {
-            dataController.addFavoriteGame(
-                id: UUID(),
-                name: game.name,
-                released: game.released,
-                rating: game.rating,
-                backgroundImage: game.backgroundImage,
-                description: game.description,
-                context: viewContext
-            )
-        }
+        dataController.addFavoriteGame(
+            id: UUID(),
+            name: game.name,
+            released: game.released,
+            rating: game.rating,
+            backgroundImage: game.backgroundImage,
+            description: game.description,
+            descriptionText: game.description,
+            context: viewContext
+        )
+        isFavorite = true
+        presentationMode.wrappedValue.dismiss()
+        
+    }
 }
 
 struct DetailView_Previews: PreviewProvider {

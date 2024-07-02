@@ -12,20 +12,15 @@ struct FavoriteView: View {
     @FetchRequest(
         entity: FavoriteGame.entity(),
         sortDescriptors: []
-    ) var favoriteGames: FetchedResults<FavoriteGame>
-    @Environment(\.managedObjectContext) private var viewContext
+      ) var favoriteGames: FetchedResults<FavoriteGame>
+      @Environment(\.managedObjectContext) private var viewContext
+    @State private var showDetailView = false
 
     var body: some View {
         NavigationView{
             List {
                 ForEach(favoriteGames) { game in
-                    NavigationLink(destination: DetailView(game: Game(
-                        id: game.id!.uuidString.hashValue,
-                        name: game.name ?? "",
-                        released: game.released ?? "",
-                        rating: game.rating,
-                        backgroundImage: game.backgroundImage
-                    ))) {
+                    NavigationLink(destination: FavoriteDetailView(favoriteGame: game)) {
                         VStack(alignment: .leading) {
                             HStack{
                                 if let imageUrl = game.backgroundImage, let url = URL(string: imageUrl) {
@@ -69,14 +64,15 @@ struct FavoriteView: View {
 
     private func deleteFavoriteGame(offsets: IndexSet) {
         withAnimation {
-            offsets.map { favoriteGames[$0] }.forEach(viewContext.delete)
-            do {
-                try viewContext.save()
-            } catch {
-                print("Failed to delete game: \(error.localizedDescription)")
-            }
+          offsets.map { favoriteGames[$0] }.forEach(viewContext.delete)
+          do {
+            try viewContext.save()
+          } catch {
+            print("Failed to delete game: \(error.localizedDescription)")
+          }
+          showDetailView = false // Dismiss DetailView when favorite is deleted
         }
-    }
+      }
 }
 
 struct FavoriteView_Previews: PreviewProvider {

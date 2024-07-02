@@ -30,23 +30,48 @@ class DataController: ObservableObject {
         }
     }
 
-    func addFavoriteGame(id: UUID, name: String, released: String, rating: Double, backgroundImage: String?, description: String?, context: NSManagedObjectContext) {
-        let favoriteGame = FavoriteGame(context: context)
-        favoriteGame.id = id
+    func addFavoriteGame(id: UUID, name: String, released: String, rating: Double, backgroundImage: String?, description: String?, descriptionText: String?, context: NSManagedObjectContext) {
+        // Check if the game with the same ID already exists
+        let fetchRequest: NSFetchRequest<FavoriteGame> = FavoriteGame.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %@", id as CVarArg)
+
+        if let existingGame = try? context.fetch(fetchRequest).first {
+            // Update the existing game
+            editFavoriteGame(favoriteGame: existingGame, name: name, released: released, rating: rating, backgroundImage: backgroundImage, description: description, descriptionText: descriptionText, context: context)
+        } else {
+            // Create a new favorite game
+            let favoriteGame = FavoriteGame(context: context)
+            favoriteGame.id = id
+            favoriteGame.name = name
+            favoriteGame.released = released
+            favoriteGame.rating = rating
+            favoriteGame.backgroundImage = backgroundImage
+            favoriteGame.descriptionText = descriptionText
+
+            save(context: context)
+        }
+    }
+    
+    func editFavoriteGame(favoriteGame: FavoriteGame, name: String, released: String, rating: Double, backgroundImage: String?, description: String?, descriptionText: String?, context: NSManagedObjectContext) {
         favoriteGame.name = name
         favoriteGame.released = released
         favoriteGame.rating = rating
         favoriteGame.backgroundImage = backgroundImage
+        favoriteGame.descriptionText = descriptionText
 
         save(context: context)
     }
     
-    func editFavoriteGame(favoriteGame: FavoriteGame, name: String, released: String, rating: Double, backgroundImage: String?, context: NSManagedObjectContext) {
-        favoriteGame.name = name
-        favoriteGame.released = released
-        favoriteGame.rating = rating
-        favoriteGame.backgroundImage = backgroundImage
-
-        save(context: context)
+    func fetchFavoriteGames() -> [FavoriteGame] {
+        let fetchRequest: NSFetchRequest<FavoriteGame> = FavoriteGame.fetchRequest()
+        do {
+            return try container.viewContext.fetch(fetchRequest)
+        } catch {
+            print("Error fetching favorite games: \(error)")
+            return []
+        }
     }
+    
+    
 }
+
