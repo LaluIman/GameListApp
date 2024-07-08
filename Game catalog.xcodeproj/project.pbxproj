@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		8138F3DD2C2E2661001CA54B /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81F711692C2E12C700F25E31 /* CoreData.framework */; };
-		8140F23A2C311B68000B8A6B /* FavoriteGame.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8140F2382C311B68000B8A6B /* FavoriteGame.xcdatamodeld */; };
 		8140F23C2C311BD9000B8A6B /* FavoriteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8140F23B2C311BD9000B8A6B /* FavoriteView.swift */; };
 		8140F2402C311DE1000B8A6B /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8140F23F2C311DE1000B8A6B /* DataController.swift */; };
 		814797E22C2D029600B1444C /* GameCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814797E12C2D029600B1444C /* GameCard.swift */; };
@@ -24,10 +23,10 @@
 		81C2F1232C2C15D800253193 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81C2F1222C2C15D800253193 /* AboutView.swift */; };
 		81C2F1252C2C15E900253193 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81C2F1242C2C15E900253193 /* DetailView.swift */; };
 		81C2F1272C2C21F400253193 /* GameRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81C2F1262C2C21F400253193 /* GameRow.swift */; };
+		81D595432C34F0A500A23C2B /* FavoriteGame.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 81D595412C34F0A500A23C2B /* FavoriteGame.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		8140F2392C311B68000B8A6B /* FavoriteGame.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FavoriteGame.xcdatamodel; sourceTree = "<group>"; };
 		8140F23B2C311BD9000B8A6B /* FavoriteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteView.swift; sourceTree = "<group>"; };
 		8140F23F2C311DE1000B8A6B /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		814797E12C2D029600B1444C /* GameCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCard.swift; sourceTree = "<group>"; };
@@ -44,6 +43,7 @@
 		81C2F1222C2C15D800253193 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		81C2F1242C2C15E900253193 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		81C2F1262C2C21F400253193 /* GameRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameRow.swift; sourceTree = "<group>"; };
+		81D595422C34F0A500A23C2B /* FavoriteGame.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FavoriteGame.xcdatamodel; sourceTree = "<group>"; };
 		81F711692C2E12C700F25E31 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -62,8 +62,8 @@
 		8140F2372C311B56000B8A6B /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
-				8140F2382C311B68000B8A6B /* FavoriteGame.xcdatamodeld */,
 				8140F23F2C311DE1000B8A6B /* DataController.swift */,
+				81D595412C34F0A500A23C2B /* FavoriteGame.xcdatamodeld */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -222,6 +222,7 @@
 				814797E42C2D0E9D00B1444C /* ContentView.swift in Sources */,
 				81C2F1252C2C15E900253193 /* DetailView.swift in Sources */,
 				81C2F1272C2C21F400253193 /* GameRow.swift in Sources */,
+				81D595432C34F0A500A23C2B /* FavoriteGame.xcdatamodeld in Sources */,
 				81C2F1232C2C15D800253193 /* AboutView.swift in Sources */,
 				814797E22C2D029600B1444C /* GameCard.swift in Sources */,
 				8140F2402C311DE1000B8A6B /* DataController.swift in Sources */,
@@ -230,7 +231,6 @@
 				81C2F1212C2C15C400253193 /* HomeView.swift in Sources */,
 				81C2F0EE2C2C120900253193 /* Game_catalogApp.swift in Sources */,
 				81C2F11B2C2C157C00253193 /* GameModel.swift in Sources */,
-				8140F23A2C311B68000B8A6B /* FavoriteGame.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -438,14 +438,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		8140F2382C311B68000B8A6B /* FavoriteGame.xcdatamodeld */ = {
+		81D595412C34F0A500A23C2B /* FavoriteGame.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				8140F2392C311B68000B8A6B /* FavoriteGame.xcdatamodel */,
+				81D595422C34F0A500A23C2B /* FavoriteGame.xcdatamodel */,
 			);
-			currentVersion = 8140F2392C311B68000B8A6B /* FavoriteGame.xcdatamodel */;
+			currentVersion = 81D595422C34F0A500A23C2B /* FavoriteGame.xcdatamodel */;
 			name = FavoriteGame.xcdatamodeld;
-			path = "/Users/macbookm1/Documents/ITmabruh/IOS APP/Game catalog/Game catalog/CoreData/FavoriteGame.xcdatamodeld";
+			path = "/Users/macbookm1/Documents/ITmabruh/IOS APP/GameListApp/Game catalog/CoreData/FavoriteGame.xcdatamodeld";
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

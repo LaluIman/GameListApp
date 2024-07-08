@@ -44,7 +44,11 @@ struct GamesManager {
                         if let gameDetailURL = URL(string: "https://api.rawg.io/api/games/\(game.id)?key=7ecfcb8fa13a47e190e790f26c8e7e87") {
                             let detailData = try Data(contentsOf: gameDetailURL)
                             let detailResponse = try decoder.decode(Game.self, from: detailData)
-                            game.description = detailResponse.description
+                            if let description = detailResponse.description {
+                                game.description = description.removingHTMLTags()
+                            } else {
+                                game.description = nil
+                            }
                         }
                         gamesWithDescription.append(game)
                     }
@@ -56,6 +60,16 @@ struct GamesManager {
             }
         }
         task.resume()
+    }
+}
+
+extension String {
+    func removingHTMLTags() -> String {
+        let data = Data(self.utf8)
+        if let attributedString = try? NSAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html, .characterEncoding: String.Encoding.utf8.rawValue], documentAttributes: nil) {
+            return attributedString.string
+        }
+        return self
     }
 }
 
